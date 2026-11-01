@@ -1,16 +1,22 @@
 CC = gcc
-CFLAGS = -w -wall -ansi -pedantic
+CFLAGS = -Wall -Wextra -std=c99
 LDFLAGS =
 EXEC = game
-SRC = game.h game.c
+SRC = game.c
 OBJ = $(SRC:.c=.o)
-
 
 all: $(EXEC)
 
+$(EXEC): $(OBJ)
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
-clean :
-    rm -rf *.o
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	rm -rf *.o
 
 mrproper: clean
-    rm  -rf $(EXEC)
+	rm -rf $(EXEC) $(EXEC).exe
+
+.PHONY: all clean mrproper
